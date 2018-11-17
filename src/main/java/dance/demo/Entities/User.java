@@ -1,23 +1,29 @@
 package dance.demo.Entities;
 
 import dance.demo.Utils.Utils;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class User {
     @Id
-    @Column(name = "username", length = 20, nullable = false, unique = true)
+    @NotEmpty
+    @Column(name = "username", length = 20, unique = true)
     private String username;
 
-    @Column(name = "password", length = 50, nullable = false)
+    @NotEmpty
+    @Column(name = "password", length = 50)
     private String password;
 
-    @Column(name = "firstname", length = 20, nullable = false)
+    @NotEmpty
+    @Column(name = "firstname", length = 20)
     private String firstName;
 
-    @Column(name = "lastname", length = 20, nullable = false)
+    @NotEmpty
+    @Column(name = "lastname", length = 20)
     private String lastName;
 
     @Column(name = "admin")
