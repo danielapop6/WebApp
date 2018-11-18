@@ -25,8 +25,8 @@ public class DanceStyleController {
     }
 
     @GetMapping("/allInModel")
-    public String getAllInModel(Model model) {
-        model.addAttribute("myStyles",danceStyleRepo.findAll());
+    public String getAllInModel(Model model,@RequestParam(defaultValue = "") String name) {
+        model.addAttribute("myStyles",danceStyleRepo.findByNameLike("%"+name+"%"));
         return "views/styleList";
     }
 
