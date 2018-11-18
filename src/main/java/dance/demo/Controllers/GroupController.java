@@ -6,13 +6,14 @@ import dance.demo.Repositories.DanceStyleRepo;
 import dance.demo.Repositories.GroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping("/danceschool/groups")
+@Controller
 public class GroupController {
     @Autowired
     private GroupRepo groupRepo;
@@ -20,12 +21,18 @@ public class GroupController {
     @Autowired
     private DanceStyleRepo danceStyleRepo;
 
-    @GetMapping("/all")
+    @GetMapping("/allGroups")
     public List<Group> getAll() {
         return groupRepo.findAll();
     }
 
-    @PostMapping("/add")
+    @GetMapping("/groups")
+    public String getAllInModel(Model model) {
+        model.addAttribute("myGroups", groupRepo.findAll());
+        return "views/groupsList";
+    }
+
+    @PostMapping("/addGroup")
     public Group create(@Valid @RequestBody Group group) {
         return groupRepo.save(group);
 

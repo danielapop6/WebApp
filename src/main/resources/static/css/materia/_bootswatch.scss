@@ -93,7 +93,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
     }
 
     &:active {
-      box-shadow: 2px 2px 4px rgba(0,0,0,.4);
+      box-shadow: 2px 2px 4px rgba(232, 218, 239,.4);
     }
 
     @include ripple($color);

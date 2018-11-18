@@ -5,6 +5,8 @@ import dance.demo.Exceptions.ResourceNotFoundException;
 import dance.demo.Repositories.DanceStyleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,8 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/danceschool/styles")
+@Controller
 public class DanceStyleController {
     @Autowired
     private DanceStyleRepo danceStyleRepo;
@@ -23,7 +24,14 @@ public class DanceStyleController {
         return danceStyleRepo.findAll();
     }
 
-    @GetMapping("/all/{id}")
+    @GetMapping("/allInModel")
+    public String getAllInModel(Model model) {
+        model.addAttribute("myStyles",danceStyleRepo.findAll());
+        return "views/styleList";
+    }
+
+
+    @GetMapping("/allStyles/{id}")
     public ResponseEntity<DanceStyle> getById(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
         DanceStyle danceStyle;
         try {
@@ -35,12 +43,12 @@ public class DanceStyleController {
 
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addStyle")
     public DanceStyle create(@Valid @RequestBody DanceStyle danceStyle) {
         return danceStyleRepo.save(danceStyle);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateStyle/{id}")
     public ResponseEntity<DanceStyle> update(@PathVariable(value = "id") String id,@Valid @RequestBody DanceStyle styleDetails) throws ResourceNotFoundException {
 
         DanceStyle danceStyle = null;
@@ -58,7 +66,7 @@ public class DanceStyleController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteStyle/{id}")
     public Map<String, Boolean> delete(@PathVariable(value = "id") String id)
             throws ResourceNotFoundException {
         DanceStyle danceStyle;
