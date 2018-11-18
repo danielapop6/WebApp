@@ -1,11 +1,13 @@
 package dance.demo.Controllers;
 
+import dance.demo.Entities.Group;
 import dance.demo.Entities.User;
 import dance.demo.Exceptions.ResourceNotFoundException;
 import dance.demo.Repositories.UserRepo;
 import dance.demo.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/danceschool/users")
 public class UserController {
     @Autowired
@@ -33,15 +35,19 @@ public class UserController {
         } catch (Exception e) {
             throw new ResourceNotFoundException("Not found");
         }
-
     }
 
-    public boolean isPresent(String username){
-        User user=userRepo.findOne(username);
-        if(user!=null){
-            return true;
-        }
-        return false;
+    @GetMapping("/addUserGroup")
+    public void addUserGroup(@RequestParam String username, @RequestParam Group group) {
+        List<Group> groups = userRepo.getOne(username).getGroups();
+        groups.add(group);
+        userRepo.getOne(username).setGroups(groups);
+    }
+
+
+    boolean isPresent(String username) {
+        User user = userRepo.findOne(username);
+        return user != null;
     }
 
     @PostMapping("/users")
@@ -65,7 +71,6 @@ public class UserController {
         } catch (Exception e) {
             throw new ResourceNotFoundException("Not found");
         }
-
     }
 
     @DeleteMapping("/users/{id}")
@@ -81,6 +86,5 @@ public class UserController {
         } catch (Exception e) {
             throw new ResourceNotFoundException("Not found");
         }
-
     }
 }

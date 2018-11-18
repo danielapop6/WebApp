@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "groups")
@@ -22,12 +24,31 @@ public class Group {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DanceStyle danceStyle;
 
+    @ManyToMany(mappedBy = "groups")
+    private List<User> users;
+
     public Group() {
     }
+
+    public Group(Level level, DanceStyle danceStyle, List<User> users) {
+        this.level = level;
+        this.danceStyle = danceStyle;
+        this.users = users;
+    }
+
 
     public Group(Level level, DanceStyle danceStyle) {
         this.level = level;
         this.danceStyle = danceStyle;
+        this.users = new ArrayList<>();
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Integer getId() {

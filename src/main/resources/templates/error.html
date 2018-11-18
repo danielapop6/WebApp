@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{fragments/main_layout}" >
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout}">
 <head>
- <title>Bailarte Dance School</title>
+    <title>Bailarte Dance School</title>
 </head>
 <body>
 
-     <div  layout:fragment="content" class="container mySpace">
-         <div>
-         
-            There was an error  |<span th:text="${message}"></span>| <span th:text="${status}" class="text text-danger"></span>
-         
-         </div>
-         <div>
-           Please contact Bailarte if you have reached this far!
-         </div>
-     </div>
+<div layout:fragment="content" class="container mySpace">
+    <div>
+
+        There was an error |<span th:text="${message}"></span>| <span th:text="${status}"
+                                                                      class="text text-danger"></span>
+
+    </div>
+    <div>
+        Please contact Bailarte if you have reached this far!
+    </div>
+</div>
 </body>
 </html>

@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
@@ -29,6 +31,12 @@ public class User {
     @Column(name = "admin")
     private Boolean admin;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "usersgroups", joinColumns={
+            @JoinColumn(name = "username", referencedColumnName = "username") }, inverseJoinColumns = {
+            @JoinColumn(name = "groupId", referencedColumnName = "group_id") })
+    private List<Group> groups;
+
     public User() {
     }
 
@@ -38,6 +46,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = admin;
+        groups = new ArrayList<>();
     }
     public User(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -45,6 +54,24 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = false;
+        groups = new ArrayList<>();
+    }
+
+    public User(String username, String password, String firstName, String lastName, Boolean admin, List<Group> groups) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.admin = admin;
+        this.groups = groups;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 
     public String getUsername() {
