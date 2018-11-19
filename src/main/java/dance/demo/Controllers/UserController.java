@@ -3,14 +3,17 @@ package dance.demo.Controllers;
 import dance.demo.Entities.Group;
 import dance.demo.Entities.User;
 import dance.demo.Exceptions.ResourceNotFoundException;
+import dance.demo.Repositories.GroupRepo;
 import dance.demo.Repositories.UserRepo;
 import dance.demo.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private GroupRepo groupRepo;
 
     @GetMapping("/all")
     public List<User> getAll() {
@@ -37,9 +43,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/addUserGroup")
-    public void addUserGroup(@RequestParam String username, @RequestParam Group group) {
+    @PostMapping("/addUserGroup/{groupId}")/////here
+    public void addUserGroup( @PathVariable(value="groupId") Integer groupId, Principal principal) {
+        String username = principal.getName();
         List<Group> groups = userRepo.getOne(username).getGroups();
+        Group group = groupRepo.getOne(groupId);
         groups.add(group);
         userRepo.getOne(username).setGroups(groups);
     }
@@ -52,9 +60,12 @@ public class UserController {
 
     @PostMapping("/users")
     public User create(@Valid @RequestBody User user) {
-        user.setPassword(Utils.getMD5Hash(user.getPassword()));
+        BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
+
+
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> update(@PathVariable(value = "id") String username,
@@ -86,5 +97,14 @@ public class UserController {
         } catch (Exception e) {
             throw new ResourceNotFoundException("Not found");
         }
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(Model model, Principal principal){
+        String username = principal.getName();
+        User user = userRepo.getOne(username);
+        model.addAttribute("groups",user.getGroups());
+        model.addAttribute("user",user);
+        return "views/profile";
     }
 }

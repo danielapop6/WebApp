@@ -32,4 +32,8 @@ public class RegisterController {
         userController.create(user);
         return  "views/success";
     }
+    @GetMapping("/home")
+    public String home(){
+        return "index";
+    }
 }
