@@ -46,7 +46,6 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = admin;
-        groups = new ArrayList<>();
     }
     public User(String username, String password, String firstName, String lastName) {
         this.username = username;
@@ -54,7 +53,6 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = false;
-        groups = new ArrayList<>();
     }
 
     public User(String username, String password, String firstName, String lastName, Boolean admin, List<Group> groups) {

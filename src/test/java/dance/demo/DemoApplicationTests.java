@@ -40,10 +40,12 @@ public class DemoApplicationTests {
         User user2 = new User("lavinia", "lavinia", "Lau", "Lavinia", false);
         userController.create(user2);
 
-        DanceStyle style = new DanceStyle("salsa", "Spain", "Funny");
-        DanceStyle style2 = new DanceStyle("bachata", "Dominican Republik", "Romantic");
-        DanceStyle style3 = new DanceStyle("kizomba", "Spain", "Romantic");
-        DanceStyle style4 = new DanceStyle("zouk", "Caraibee", "Romantic");
+        DanceStyle style = new DanceStyle("Salsa","Sometimes in life confusion tends to arise and only dialogue of dance seems to make sense.","Spain");
+        DanceStyle style2 = new DanceStyle("Bachata","Hand in hand, on the edge of the sand, they danced by the light of the moon.","Caribbean Spanish");
+        DanceStyle style3 = new DanceStyle("Zouk","Nobody cares if you can’t dance well. Just get up and dance. Great dancers are great because of their passion.","Guadeloupian Creole");
+        DanceStyle style4 = new DanceStyle("Kizomba","The job of feets is walking, but their hobby is dancing.","Angola");
+        DanceStyle style5 = new DanceStyle("Waltz","Dancing is a perpendicular expression of a horizontal desire.","Germany");
+        DanceStyle style6 = new DanceStyle("Cha cha","Those who were seen dancing were thought to be insane by those who could not hear the music.","Latin American Spanish");
 
         danceStyleController.create(style);
         danceStyleController.create(style2);

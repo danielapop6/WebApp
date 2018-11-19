@@ -18,7 +18,7 @@ public class DanceStyle {
     @Column(name = "origin", length = 30, nullable = false)
     private String origin;
 
-    @Column(name = "description", length = 100)
+    @Column(name = "description", length = 200)
     private String description;
 
     @OneToMany(mappedBy = "danceStyle",cascade = CascadeType.MERGE)

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +44,21 @@ public class UserController {
         }
     }
 
-    @PostMapping("/addUserGroup/{groupId}")
-    public void addUserGroup(@PathVariable(value = "groupId") Integer groupId, Principal principal) {
+    @GetMapping("/addUserGroup")
+    public String addUserGroup(Integer groupId, Principal principal, Model model) {
         String username = principal.getName();
-        List<Group> groups = userRepo.getOne(username).getGroups();
+        addUG(groupId,username);
+        return "index";
+    }
+    private void addUG(Integer groupId, String username){
+
         Group group = groupRepo.getOne(groupId);
-        groups.add(group);
-        userRepo.getOne(username).setGroups(groups);
+        User user = userRepo.getOne(username);
+
+        user.getGroups().add(group);
+        group.getUsers().add(user);
+        userRepo.save(user);
+        groupRepo.save(group);
     }
 
 
@@ -62,6 +71,8 @@ public class UserController {
     public User create(@Valid @RequestBody User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
+        List<Group> groups = new ArrayList<>();
+        user.setGroups(groups);
         return userRepo.save(user);
     }
 
@@ -83,20 +94,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/users/{id}")
-    public Map<String, Boolean> delete(@PathVariable(value = "id") String username)
-            throws ResourceNotFoundException {
-        User user = null;
-        try {
-            userRepo.findOne(username);
-            userRepo.delete(user);
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("deleted", Boolean.TRUE);
-            return response;
-        } catch (Exception e) {
-            throw new ResourceNotFoundException("Not found");
-        }
-    }
+
 
     @GetMapping("/profile")
     public String showProfile(Model model, Principal principal) {
