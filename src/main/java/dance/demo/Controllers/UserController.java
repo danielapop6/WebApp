@@ -61,6 +61,24 @@ public class UserController {
         groupRepo.save(group);
     }
 
+    @GetMapping("/deleteUserGroup")
+    public String deleteUserGroup(Integer groupId, Principal principal, Model model) {
+        String username = principal.getName();
+        deleteUG(groupId,username);
+        return "index";
+    }
+
+    private void deleteUG(Integer groupId, String username){
+
+        Group group = groupRepo.getOne(groupId);
+        User user = userRepo.getOne(username);
+
+        user.getGroups().remove(groupId);
+        group.getUsers().remove(username);
+        userRepo.save(user);
+        groupRepo.save(group);
+    }
+
 
     boolean isPresent(String username) {
         User user = userRepo.findOne(username);
@@ -104,4 +122,6 @@ public class UserController {
         model.addAttribute("user", user);
         return "views/profile";
     }
+
+
 }

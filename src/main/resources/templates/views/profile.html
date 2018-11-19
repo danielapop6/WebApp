@@ -28,6 +28,9 @@
                         <th>
                             <h3> Level</h3>
                         </th>
+                        <th>
+                            <h3> Delete</h3>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,6 +38,8 @@
                         <td th:text="${group.id}"></td>
                         <td th:text="${group.getDanceStyle().name}"></td>
                         <td th:text="${group.level}"></td>
+                        <td><a th:href="@{/deleteUserGroup(groupId=${group.id})}" class="btn btn-light">Delete</a></td>
+
                     </tr>
                     </tbody>
 

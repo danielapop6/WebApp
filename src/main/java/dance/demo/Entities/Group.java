@@ -20,8 +20,7 @@ public class Group {
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private DanceStyle danceStyle;
 
     @ManyToMany(mappedBy = "groups")

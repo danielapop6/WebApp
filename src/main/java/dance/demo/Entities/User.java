@@ -31,7 +31,7 @@ public class User {
     @Column(name = "admin")
     private Boolean admin;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "usersgroups", joinColumns={
             @JoinColumn(name = "username", referencedColumnName = "username") }, inverseJoinColumns = {
             @JoinColumn(name = "groupId", referencedColumnName = "group_id") })
