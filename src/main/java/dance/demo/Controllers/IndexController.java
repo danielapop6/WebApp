@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
-    @GetMapping("/")
-    public String showIndexPage(){
+    @GetMapping("/home")
+    public String showIndexPage() {
         return "index";
+    }
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "views/loginForm";
     }
 }
