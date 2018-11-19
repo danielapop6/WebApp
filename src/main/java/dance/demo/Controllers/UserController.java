@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/danceschool/users")
 public class UserController {
     @Autowired
     private UserRepo userRepo;
@@ -43,8 +43,8 @@ public class UserController {
         }
     }
 
-    @PostMapping("/addUserGroup/{groupId}")/////here
-    public void addUserGroup( @PathVariable(value="groupId") Integer groupId, Principal principal) {
+    @PostMapping("/addUserGroup/{groupId}")
+    public void addUserGroup(@PathVariable(value = "groupId") Integer groupId, Principal principal) {
         String username = principal.getName();
         List<Group> groups = userRepo.getOne(username).getGroups();
         Group group = groupRepo.getOne(groupId);
@@ -60,11 +60,10 @@ public class UserController {
 
     @PostMapping("/users")
     public User create(@Valid @RequestBody User user) {
-        BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
-
 
 
     @PutMapping("/users/{id}")
@@ -100,11 +99,11 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(Model model, Principal principal){
+    public String showProfile(Model model, Principal principal) {
         String username = principal.getName();
         User user = userRepo.getOne(username);
-        model.addAttribute("groups",user.getGroups());
-        model.addAttribute("user",user);
+        model.addAttribute("groups", user.getGroups());
+        model.addAttribute("user", user);
         return "views/profile";
     }
 }

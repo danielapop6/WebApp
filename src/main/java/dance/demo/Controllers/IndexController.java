@@ -1,8 +1,10 @@
 package dance.demo.Controllers;
 
 
+import dance.demo.Entities.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class IndexController {
@@ -12,7 +14,7 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(User user) {
         return "views/loginForm";
     }
 }

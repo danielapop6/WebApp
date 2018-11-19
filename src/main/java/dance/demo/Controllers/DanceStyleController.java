@@ -19,7 +19,7 @@ public class DanceStyleController {
     @Autowired
     private DanceStyleRepo danceStyleRepo;
 
-    @GetMapping("/all")
+    @GetMapping("/allStyles")
     public List<DanceStyle> getAll() {
         return danceStyleRepo.findAll();
     }
