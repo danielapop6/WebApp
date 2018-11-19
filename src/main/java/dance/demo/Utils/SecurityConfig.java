@@ -22,20 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-        .usersByUsernameQuery("select username as principal, password as credentials, true from users where username=?")
-        .authoritiesByUsernameQuery("select username as principal, admin as role from users where username=?")
-        .passwordEncoder(passwordEncoder());
+                .usersByUsernameQuery("select username as principal, password as credentials, true from users where username=?")
+                .authoritiesByUsernameQuery("select username as principal, admin as role from users where username=?")
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/home","/register","/login","/css/**","/webjars/**").permitAll().anyRequest().authenticated()
-        .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/profile").and().logout().logoutSuccessUrl("/login");
+        http.authorizeRequests().antMatchers("/home", "/register", "/login", "/css/**", "/webjars/**").permitAll().anyRequest().authenticated()
+                .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/profile").and().logout().logoutSuccessUrl("/login");
     }
 
 }

@@ -25,8 +25,8 @@ public class DanceStyleController {
     }
 
     @GetMapping("/allInModel")
-    public String getAllInModel(Model model,@RequestParam(defaultValue = "") String name) {
-        model.addAttribute("myStyles",danceStyleRepo.findByNameLike("%"+name+"%"));
+    public String getAllInModel(Model model, @RequestParam(defaultValue = "") String name) {
+        model.addAttribute("myStyles", danceStyleRepo.findByNameLike("%" + name + "%"));
         return "views/styleList";
     }
 
@@ -49,7 +49,7 @@ public class DanceStyleController {
     }
 
     @PutMapping("/updateStyle/{id}")
-    public ResponseEntity<DanceStyle> update(@PathVariable(value = "id") String id,@Valid @RequestBody DanceStyle styleDetails) throws ResourceNotFoundException {
+    public ResponseEntity<DanceStyle> update(@PathVariable(value = "id") String id, @Valid @RequestBody DanceStyle styleDetails) throws ResourceNotFoundException {
 
         DanceStyle danceStyle = null;
         try {

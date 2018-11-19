@@ -1,11 +1,8 @@
 package dance.demo.Entities;
 
-import dance.demo.Utils.Utils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,9 +29,9 @@ public class User {
     private Boolean admin;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "usersgroups", joinColumns={
-            @JoinColumn(name = "username", referencedColumnName = "username") }, inverseJoinColumns = {
-            @JoinColumn(name = "groupId", referencedColumnName = "group_id") })
+    @JoinTable(name = "usersgroups", joinColumns = {
+            @JoinColumn(name = "username", referencedColumnName = "username")}, inverseJoinColumns = {
+            @JoinColumn(name = "groupId", referencedColumnName = "group_id")})
     private List<Group> groups;
 
     public User() {
@@ -42,14 +39,15 @@ public class User {
 
     public User(String username, String password, String firstName, String lastName, Boolean admin) {
         this.username = username;
-        this.password=password;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = admin;
     }
+
     public User(String username, String password, String firstName, String lastName) {
         this.username = username;
-        this.password=password;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.admin = false;

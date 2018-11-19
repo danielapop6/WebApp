@@ -16,10 +16,11 @@ public class RegisterController {
     private UserController userController;
 
     @GetMapping("/register")
-    public String registerForm(Model model){
-        model.addAttribute("user",new User());
+    public String registerForm(Model model) {
+        model.addAttribute("user", new User());
         return "views/registerForm";
     }
+
     @PostMapping("/register")
     public String registerUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -30,6 +31,6 @@ public class RegisterController {
             return "views/registerForm";
         }
         userController.create(user);
-        return  "views/success";
+        return "views/success";
     }
 }

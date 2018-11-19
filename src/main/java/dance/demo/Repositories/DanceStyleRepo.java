@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DanceStyleRepo extends JpaRepository<DanceStyle,String> {
+public interface DanceStyleRepo extends JpaRepository<DanceStyle, String> {
     List<DanceStyle> findByNameLike(String name);
 }

@@ -21,8 +21,8 @@ public class DanceStyle {
     @Column(name = "description", length = 200)
     private String description;
 
-    @OneToMany(mappedBy = "danceStyle",cascade = CascadeType.MERGE)
-    @OnDelete(action= OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "danceStyle", cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Group> groups = new HashSet<>();
 
     public DanceStyle() {

@@ -5,7 +5,6 @@ import dance.demo.Entities.User;
 import dance.demo.Exceptions.ResourceNotFoundException;
 import dance.demo.Repositories.GroupRepo;
 import dance.demo.Repositories.UserRepo;
-import dance.demo.Utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -47,10 +44,11 @@ public class UserController {
     @GetMapping("/addUserGroup")
     public String addUserGroup(Integer groupId, Principal principal, Model model) {
         String username = principal.getName();
-        addUG(groupId,username);
+        addUG(groupId, username);
         return "index";
     }
-    private void addUG(Integer groupId, String username){
+
+    private void addUG(Integer groupId, String username) {
 
         Group group = groupRepo.getOne(groupId);
         User user = userRepo.getOne(username);
@@ -64,11 +62,11 @@ public class UserController {
     @GetMapping("/deleteUserGroup")
     public String deleteUserGroup(Integer groupId, Principal principal, Model model) {
         String username = principal.getName();
-        deleteUG(groupId,username);
+        deleteUG(groupId, username);
         return "index";
     }
 
-    private void deleteUG(Integer groupId, String username){
+    private void deleteUG(Integer groupId, String username) {
 
         Group group = groupRepo.getOne(groupId);
         User user = userRepo.getOne(username);
@@ -111,7 +109,6 @@ public class UserController {
             throw new ResourceNotFoundException("Not found");
         }
     }
-
 
 
     @GetMapping("/profile")
